@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.0
+- All tooltip lines and chat messages are in English.
+
 ## 1.2.0
 - Damage over time shows the total over the full duration, also for "every N sec" tick wording; the duration is shown.
 

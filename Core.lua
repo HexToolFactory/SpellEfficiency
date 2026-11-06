@@ -78,7 +78,7 @@ local function Metrics(left, right, spellID)
   if m.castTime then
     m.timeNote = secs(m.castTime) .. " s"
   elseif header.channeled and bucket.duration then
-    m.castTime, m.timeNote = bucket.duration, "kanalisiert " .. secs(bucket.duration) .. " s"
+    m.castTime, m.timeNote = bucket.duration, "channeled " .. secs(bucket.duration) .. " s"
   end
   if m.mana and m.mana > 0 then m.perMana = total / m.mana end
   if m.castTime and m.castTime > 0 then m.perSecond = total / m.castTime end
@@ -150,12 +150,12 @@ local function TooltipLinesOf(spellID)
   return left, right
 end
 
--- " (+12% zu Rang 2)" in green, or red when the new rank is worse.
+-- " (+12% vs. Rank 2)" in green, or red when the new rank is worse.
 local function Delta(new, old, prevRank)
   if not (new and old and old > 0 and prevRank) then return "" end
   local pct = (new / old - 1) * 100
   local color = pct >= 0.05 and "|cff40ff40" or (pct <= -0.05 and "|cffff6060" or "|cffcccccc")
-  return (" %s(%+.1f%% zu Rang %d)|r%s"):format(color, pct, prevRank, COLOR)
+  return (" %s(%+.1f%% vs. Rank %d)|r%s"):format(color, pct, prevRank, COLOR)
 end
 
 local function AddLines(tooltip, spellID)
@@ -172,31 +172,31 @@ local function AddLines(tooltip, spellID)
   end
 
   local bucket = m.bucket
-  local word = m.kind == "heal" and "Heilung" or "Schaden"
+  local word = m.kind == "heal" and "Healing" or "Damage"
   -- Periodic part = whole damage over the full duration.
   local overTime
   if bucket.perTickOnly then
-    overTime = "pro Tick, Dauer unbekannt"
+    overTime = "per tick, duration unknown"
   elseif bucket.duration then
-    overTime = "über " .. secs(bucket.duration) .. " s"
+    overTime = "over " .. secs(bucket.duration) .. " s"
   else
-    overTime = "über Zeit"
+    overTime = "over time"
   end
   local avgText = fmt(m.total)
   if bucket.periodic > 0 and bucket.direct > 0 then
-    avgText = avgText .. (" (%s direkt + %s %s)"):format(fmt(bucket.direct), fmt(bucket.periodic), overTime)
+    avgText = avgText .. (" (%s direct + %s %s)"):format(fmt(bucket.direct), fmt(bucket.periodic), overTime)
   elseif bucket.periodic > 0 then
     avgText = avgText .. (" (%s)"):format(overTime)
   end
 
   tooltip:AddLine(" ")
-  tooltip:AddLine(COLOR .. "Ø " .. word .. ": " .. avgText .. Delta(m.total, prev and prev.total, prevRank) .. "|r")
+  tooltip:AddLine(COLOR .. "Avg " .. word:lower() .. ": " .. avgText .. Delta(m.total, prev and prev.total, prevRank) .. "|r")
   if m.perMana then
-    tooltip:AddLine(COLOR .. word .. " pro Mana: " .. fmt(m.perMana)
+    tooltip:AddLine(COLOR .. word .. " per mana: " .. fmt(m.perMana)
       .. Delta(m.perMana, prev and prev.perMana, prevRank) .. "|r")
   end
   if m.perSecond then
-    tooltip:AddLine(COLOR .. word .. " pro Sek. Zauberzeit: " .. fmt(m.perSecond) .. " (" .. m.timeNote .. ")"
+    tooltip:AddLine(COLOR .. word .. " per sec of cast time: " .. fmt(m.perSecond) .. " (" .. m.timeNote .. ")"
       .. Delta(m.perSecond, prev and prev.perSecond, prevRank) .. "|r")
   end
 
@@ -229,7 +229,7 @@ frame:SetScript("OnEvent", function(_, event, name)
   if TooltipDataProcessor and TooltipDataProcessor.AddTooltipPostCall and Enum and Enum.TooltipDataType then
     TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, OnSpellTooltip)
   else
-    print("|cffff5555SpellEfficiency:|r TooltipDataProcessor fehlt, Addon inaktiv.")
+    print("|cffff5555SpellEfficiency:|r TooltipDataProcessor missing, addon inactive.")
   end
   frame:UnregisterEvent("ADDON_LOADED")
 end)
@@ -240,9 +240,9 @@ SlashCmdList.SPELLEFFICIENCY = function(msg)
   msg = (msg or ""):lower():match("^%s*(.-)%s*$")
   if msg == "debug" then
     SpellEfficiencyDB.debug = not SpellEfficiencyDB.debug
-    print("|cff7fd4ffSpellEfficiency|r Debug: " .. (SpellEfficiencyDB.debug and "an" or "aus"))
+    print("|cff7fd4ffSpellEfficiency|r Debug: " .. (SpellEfficiencyDB.debug and "on" or "off"))
   else
     SpellEfficiencyDB.enabled = not SpellEfficiencyDB.enabled
-    print("|cff7fd4ffSpellEfficiency|r Tooltip-Zeilen: " .. (SpellEfficiencyDB.enabled and "an" or "aus"))
+    print("|cff7fd4ffSpellEfficiency|r Tooltip lines: " .. (SpellEfficiencyDB.enabled and "on" or "off"))
   end
 end

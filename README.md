@@ -3,9 +3,9 @@
 WoW: Forever addon. Adds three lines to every damage or healing spell tooltip:
 
 ```
-Ø Schaden: 138 (53.0 direkt + 85.0 über 15 s) (+115.6% zu Rang 2)
-Schaden pro Mana: 1.53 (+7.8% zu Rang 2)
-Schaden pro Sek. Zauberzeit: 69.0 (2 s) (+115.6% zu Rang 2)
+Avg damage: 138 (53.0 direct + 85.0 over 15 s) (+115.6% vs. Rank 2)
+Damage per mana: 1.53 (+7.8% vs. Rank 2)
+Damage per sec of cast time: 69.0 (2 s) (+115.6% vs. Rank 2)
 ```
 
 - **Average amount**: the middle of the tooltip range ("13 to 18" → 15.5). Damage over time counts as the full amount over the whole duration, including per-tick wording such as "every 3 sec for 15 sec".
@@ -15,7 +15,7 @@ Schaden pro Sek. Zauberzeit: 69.0 (2 s) (+115.6% zu Rang 2)
 - Heals show the same values as healing. Shields are skipped.
 
 The values come from the tooltip text (enUS client) plus mana cost and cast time from the spell API, so talents and
-gear show up wherever the tooltip itself reflects them. The tooltip lines are in German.
+gear show up wherever the tooltip itself reflects them.
 
 ## Commands
 
