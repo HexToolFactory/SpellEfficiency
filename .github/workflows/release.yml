@@ -1,0 +1,27 @@
+# Builds the addon zip and uploads it to CurseForge + GitHub Releases
+# whenever a "v*" tag is pushed (e.g. v1.0.0).
+# Requires the repo secret CF_API_KEY (CurseForge API token).
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Package and upload
+        uses: BigWigsMods/packager@v2
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}

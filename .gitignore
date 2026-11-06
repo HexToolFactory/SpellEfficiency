@@ -1,0 +1,9 @@
+# Packager-Output / Build-Artefakte
+.release/
+*.zip
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
