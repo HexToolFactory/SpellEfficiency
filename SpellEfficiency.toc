@@ -1,6 +1,6 @@
 ## Interface: 16001
 ## Title: Spell Efficiency
-## Notes: Shows average damage/healing per mana and per second of cast time in spell tooltips. /se toggles, /se debug.
+## Notes: Shows average damage/healing per mana and per second of cast time in spell tooltips. /se toggles, /se debug, /se errors.
 ## Author: HexToolFactory
 ## Version: @project-version@
 ## X-Curse-Project-ID: 1787158

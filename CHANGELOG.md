@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1
+- Fix: the tooltip lines sometimes did not show in combat. Values the client hides in combat are skipped, the spellbook rank list is only rebuilt out of combat, and the last good result per spell (prefilled for all spellbook spells) is used when a combat read fails.
+- New: `/se errors` lists recorded errors, `/se errors clear` clears them.
+
 ## 1.3.0
 - All tooltip lines and chat messages are in English.
 

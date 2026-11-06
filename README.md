@@ -21,6 +21,7 @@ gear show up wherever the tooltip itself reflects them.
 
 - `/se` or `/spelleff`: tooltip lines on/off
 - `/se debug`: prints the parsed values to chat
+- `/se errors`: lists recorded errors (`/se errors clear` clears them)
 
 ## Install
 
